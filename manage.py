@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request
-import sqlite3 as sql
+from flask_bootstrap import Bootstrap
+
+import mysql.connector as sql
 
 app = Flask(__name__)
+Bootstrap(app)
 
 @app.route('/')
 def home():
@@ -21,7 +24,10 @@ def update():
             EmpPhone = request.form['EmpPhone']
             EmpBdate = request.form['EmpBdate']
 
-            with sql.connect("database.db") as con:
+            with sql.connect(host="localhost", \
+                    user="flask", \
+                    password="ubuntu", \
+                    database="flask_db") as con:
                 cur = con.cursor()
                 cur.execute("INSERT INTO Employee (EmpID,EmpName,EmpGender,EmpPhone,EmpBdate) VALUES ('{0}','{1}','{2}','{3}','{4}')".format(EmpID,EmpName,EmpGender,EmpPhone,EmpBdate))
                 con.commit()
@@ -35,11 +41,14 @@ def update():
     
 @app.route('/information')
 def information():
-    con = sql.connect("database.db")
-    con.row_factory = sql.Row
-    cur = con.cursor()
-    cur.execute("Select * from Employee")
-    rows = cur.fetchall()
+    with sql.connect(host="localhost", \
+                    user="flask", \
+                    password="ubuntu", \
+                    database="flask_db") as con:
+        
+        cur = con.cursor()
+        cur.execute("Select * from Employee")
+        rows = cur.fetchall()
     return render_template("information.html",rows = rows)
 
 if __name__ == '__main__':

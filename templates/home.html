@@ -1,7 +1,12 @@
-<!doctype html>
-<html>
-    <body>
-        <h1><a href = "/registration">Registration Page</a></h1>
-        <h1><a href = "/information">Information Page</a></h1>
-    </body>
-</html>
+{% extends "bootstrap/base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+<!-- ... -->
+</div>
+{% endblock %}
+{% block content %}
+<br>
+<h1 class="text-center"><a href = "/registration">Registration Page</a></h1>
+<h1 class="text-center"><a href = "/information">Information Page</a></h1>
+{% endblock %}
